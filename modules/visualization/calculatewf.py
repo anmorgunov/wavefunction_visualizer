@@ -11,6 +11,8 @@ class Grid:
     def __init__(self, boundary=10, step=200j):
         BNDR = boundary
         STEP = step
+        self.STEP = step
+        self.BNDR = BNDR
         self.X, self.Y = np.mgrid[-BNDR:BNDR:STEP, -BNDR:BNDR:STEP]
         self.X_3D, self.Y_3D, self.Z_3D = np.mgrid[-BNDR:BNDR:STEP, -BNDR:BNDR:STEP, -BNDR:BNDR:STEP]
 
@@ -115,18 +117,54 @@ class Grid:
         # print(cntr)
         return WFvalue
 
-    def plot_hydrogen(self, n, l, m):
-        nlm = f"{n}{l}{m}"
+    def plot_hydrogen(self, nlm, origin=(0, 0, 0)):
+        # nlm = f"{n}{l}{m}"
         HydrogenObj = hydrogenwf.HydrogenWF()
-        orbital = HydrogenObj.get_nlm_funcs()[nlm]
+        x_0, y_0, z_0 = origin
+        orbital = lambda x, y, z: HydrogenObj.get_nlm_funcs()[nlm](x-x_0, y-y_0, z-z_0)
         return np.vectorize(orbital)(self.X, self.Y, 0)
+
+    def find_mixing_coeffs_and_r(self, orbitals):
+        densities, avg_r = [None]*2, [None]*2
+        for i, orb in enumerate(orbitals):
+            orb = orbitals[i]
+            r_exp = lambda x, y, z: self.find_r(x, y, z)**2
+            rGrid = np.vectorize(r_exp)(self.X, 0, 0)
+            dens = np.multiply(orb, orb)
+            rIntegral = np.multiply(dens, rGrid)
+            densities[i] = np.sum(dens)
+            avg_r[i] = np.sum(rIntegral) * (self.BNDR/(self.STEP.imag-1))
+        return densities, avg_r
+    
+    def plot_two_h_ao(self, nlm1, nlm2, rScales):
+        atomWFs = [self.plot_hydrogen(nlm1), self.plot_hydrogen(nlm2, (0, 0, 0))]
+        densities, avg_r = self.find_mixing_coeffs_and_r(atomWFs)
+        # print(densities, avg_r)
+        # print(self.STEP)
+        rMax = sum(avg_r)*2
+        factor = min([densities[0]/densities[1], densities[1]/densities[0]])
+        rShift = 0.5
+        r_and_values = []
+        for rScale in rScales:#{0.25, 0.5, 0.75}:
+            for sign in (-1, 1):
+                atomWFs = [self.plot_hydrogen(nlm1, (-self.BNDR*rShift, 0, 0)), self.plot_hydrogen(nlm2, (-self.BNDR*rShift+rScale*rMax, 0, 0))]
+                maxIntensity = min([np.max(atomWF) for atomWF in atomWFs])
+                coeff = 1
+                C = [coeff*factor, sign*coeff]
+                scaledWFs = [c * wf for c, wf in zip(C, atomWFs)]
+                WFvalue = np.add(scaledWFs[0], scaledWFs[1])
+                r_and_values.append((rScale*rMax, WFvalue))
+        # return WFvalue, maxIntensity
+        return r_and_values
 
     def main():
         pass
 
 
 if __name__ == "__main__":
-    grid = Grid('geometries/h2.xyz', 5, 40j)
+    grid = Grid(30, 40j)
+    #'geometries/h2.xyz',
     # grid.fill_mo(6)
-    o = grid.fill_mo_3d(0)
+    # o = grid.fill_mo_3d(0)
+    grid.plot_two_h_ao('100', '310')
     # print(o)

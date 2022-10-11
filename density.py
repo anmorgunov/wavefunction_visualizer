@@ -104,14 +104,14 @@ z = np.vectorize(psi310)(X, Y)
 #     ))
 # fig.show()
 
-fig = go.Figure(data=go.Heatmap(
-                    z=z,
-                    colorscale=[[0, 'yellow'], [0.5, 'black'], [1, 'cyan']]))
-fig.update_layout(title='Mt Bruno Elevation', autosize=False,
-                  width=800, height=800,
-                  margin=dict(l=65, r=50, b=65, t=90),
-                    )
-fig.write_html('test.html')
+# fig = go.Figure(data=go.Heatmap(
+#                     z=z,
+#                     colorscale=[[0, 'yellow'], [0.5, 'black'], [1, 'cyan']]))
+# fig.update_layout(title='Mt Bruno Elevation', autosize=False,
+#                   width=800, height=800,
+#                   margin=dict(l=65, r=50, b=65, t=90),
+#                     )
+# fig.write_html('test.html')
 # fig.show()
 
 # with open('h2o.cube', 'w') as f:
@@ -149,6 +149,7 @@ def find_r(x, y, z):
     return np.sqrt(x**2+y**2+z**2)
 
 def find_theta(x, y):
+    return np.arctan2(y, x)
     theta = np.arctan(y/x)
     if x < 0: return theta + np.pi
     return theta 
@@ -160,18 +161,22 @@ def psi210(x, y, z):
     # return 1
     return val
 
-# import plotly.graph_objects as go
-# import numpy as np
-# BNDR = 60
-# STEP = BNDR*3
-# X, Y, Z = np.mgrid[-BNDR:BNDR:40j, -BNDR:BNDR:40j, -BNDR:BNDR:40j]
-# print(X.flatten(), len(X))
-# vecpsi = np.vectorize(psi210)
-# # values = np.sin(X*Y*Z) / (X*Y*Z)
-# values = vecpsi(X, Y, Z)
-# param = 1*10**(-6)
-# # print(type(values), values)
-# print(values.flatten(), len(values))
+import plotly.graph_objects as go
+import numpy as np
+BNDR = 60
+STEP = BNDR*3
+X, Y, Z = np.mgrid[-BNDR:BNDR:40j, -BNDR:BNDR:40j, -BNDR:BNDR:40j]
+print(X.flatten(), len(X))
+vecpsi = np.vectorize(psi210)
+# values = np.sin(X*Y*Z) / (X*Y*Z)
+values = vecpsi(X, Y, Z)
+param = 1*10**(-6)
+import volume 
+VM = volume.Volume()
+VM.main()
+VM.plot(values, X, Y, Z, 'test')
+# print(type(values), values)
+print(values.flatten(), len(values))
 # fig = go.Figure(data=go.Volume(
 #     x=X.flatten(),
 #     y=Y.flatten(),
@@ -182,5 +187,7 @@ def psi210(x, y, z):
 #     opacity=0.2, # needs to be small to see through all surfaces
 #     surface_count=100, # needs to be a large number for good volume rendering
 #     opacityscale="extremes",
+#     colorscale='RdBu'
 #     ))
 # fig.show()
+# fig.write_html('test.html')

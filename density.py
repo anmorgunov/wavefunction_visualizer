@@ -35,44 +35,44 @@ def psi310(x, y):
 
 A0 = 1#5.29177210903*(10**(-11))
 
-xs, ys, zs = [], [], []
+# xs, ys, zs = [], [], []
 
-BNDR = 60
-div = 5
+# BNDR = 60
+# div = 5
 
-for dx in range(-BNDR, BNDR):
-    x = dx/div
-    xs.append(x)
-for dy in range(-BNDR, BNDR):
-    y = dy/div
-    ys.append(y)
-        # zs.append(psi210(x, y)**2)
+# for dx in range(-BNDR, BNDR):
+#     x = dx/div
+#     xs.append(x)
+# for dy in range(-BNDR, BNDR):
+#     y = dy/div
+#     ys.append(y)
+#         # zs.append(psi210(x, y)**2)
 
-print('before')
-# zs = [zs]*len(xs)
-f = open('dataset.csv', 'w')
-print(len(xs), len(ys))
-# f.write(','+','.join([str(index) for index in range(len(xs))])+'\n')
-for i, x in enumerate(xs):
-    # values = f'{i},'
-    values = ''
-    for j, y in enumerate(ys):
-        values += str(psi210(x, y)**1)
-        if j != len(ys) - 1: values += ','
-    if i != len(xs) - 1: values += '\n'
-    f.write(values)
-f.close()
-print('after')
+# print('before')
+# # zs = [zs]*len(xs)
+# f = open('dataset.csv', 'w')
+# print(len(xs), len(ys))
+# # f.write(','+','.join([str(index) for index in range(len(xs))])+'\n')
+# for i, x in enumerate(xs):
+#     # values = f'{i},'
+#     values = ''
+#     for j, y in enumerate(ys):
+#         values += str(psi210(x, y)**1)
+#         if j != len(ys) - 1: values += ','
+#     if i != len(xs) - 1: values += '\n'
+#     f.write(values)
+# f.close()
+# print('after')
 # print(xs, ys, zs)
 # threshold = 5
-z_data = pd.read_csv('dataset.csv')
+# z_data = pd.read_csv('dataset.csv')
 # z_data = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv')
 
-print(type(z_data))
+# print(type(z_data))
 # z_data = pd.array(zs*len(xs))
 # print(z_data)
 
-z = z_data.values
+# z = z_data.values
 # print(z, len(z), type(z))
 BNDR = 30
 STEP = 200j
@@ -107,7 +107,12 @@ z = np.vectorize(psi310)(X, Y)
 fig = go.Figure(data=go.Heatmap(
                     z=z,
                     colorscale=[[0, 'yellow'], [0.5, 'black'], [1, 'cyan']]))
-fig.show()
+fig.update_layout(title='Mt Bruno Elevation', autosize=False,
+                  width=800, height=800,
+                  margin=dict(l=65, r=50, b=65, t=90),
+                    )
+fig.write_html('test.html')
+# fig.show()
 
 # with open('h2o.cube', 'w') as f:
 #     f.write('''Electron density in real space (e/Bohr^3)

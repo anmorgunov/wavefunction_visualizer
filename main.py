@@ -1,8 +1,8 @@
 import calculatewf
 import heatmap 
 
-grid = calculatewf.Grid('geometries/h2.xyz')
-values = grid.fill_mo(1)
+grid = calculatewf.Grid('geometries/co.xyz', 5)
+values = grid.fill_mo(7)
 
 HM = heatmap.Heatmap()
 HM.main()

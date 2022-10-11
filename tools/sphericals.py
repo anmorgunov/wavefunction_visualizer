@@ -1,11 +1,13 @@
 import numpy as np 
 
-def s_orbital(*args):
-    return 1/(2*np.sqrt(np.pi))
+def spherical_s(x, y, z, exponent):
+    return (2 * exponent/np.pi)**(0.75)
 
-def p_orbital(r, theta, phi, coord):
-    return 1/2 * np.sqrt(3/np.pi) * coord/r
+def spherical_2px(x, y, z, exponent):
+    return (128 * (exponent**5) / (np.pi**3))**(0.25) * x 
 
-def px_orbital(r, theta, phi, x):
-    return p_orbital(r, theta, phi, x)
+def spherical_2py(x, y, z, exponent):
+    return (128 * (exponent**5) / (np.pi**3))**(0.25) * y 
 
+def spherical_2pz(x, y, z, exponent):
+    return (128 * (exponent**5) / (np.pi**3))**(0.25) * z 

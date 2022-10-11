@@ -6,7 +6,9 @@ import modules.graphs.surface as surface
 # import surface
 # import volume 
 # print(modules.graphs.heatmap)
-grid = calculatewf.Grid('geometries/c6h6.xyz', 20, 200j)
+grid = calculatewf.Grid(5, 200j)
+grid.do_rhf('geometries/c6h6.xyz')
+grid.plot_basis_functions('2D')
 i = 6
 values = grid.fill_mo(i)
 

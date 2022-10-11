@@ -1,4 +1,4 @@
-from graph import Graph
+from modules.graphs.graph import Graph
 import plotly.graph_objects as go
 import numpy as np
 

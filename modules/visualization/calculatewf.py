@@ -1,7 +1,7 @@
 import numpy as np
 import constants 
 from tools import sphericals
-import scfsolver
+import modules.scfcalculation.scfsolver as scfsolver
 
 A0 = constants.A0
 

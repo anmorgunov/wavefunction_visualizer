@@ -2,10 +2,7 @@ import modules.visualization.calculatewf as calculatewf
 import modules.graphs.heatmap as heatmap
 import modules.graphs.volume as volume
 import modules.graphs.surface as surface
-# import heatmap 
-# import surface
-# import volume 
-# print(modules.graphs.heatmap)
+
 # grid = calculatewf.Grid(30, 300j)
 # grid.do_rhf('geometries/c6h6.xyz')
 # grid.plot_basis_functions('2D')

@@ -28,15 +28,16 @@ class Heatmap(Graph):
     def determine_min_max(self, values):
         minval = np.min(values)
         maxval = max(np.max(values), abs(np.min(values)))
-        # if maxval < 1e-6: maxval = 1e-2
+        if maxval < 1e-6: maxval = 1e-2
         return minval, maxval
         
-    def plot(self, values, x, y, filename):
+    def plot(self, values, x, y, filename, title):
         fig = go.Figure()
         minval, maxval = self.determine_min_max(values)
         fig.add_trace(self.create_heatmap_trace(values, x, y, minval, maxval))
-        self._update_fig(fig)
-        fig.write_html(f'{filename}.html')
+        self._update_fig(fig, 720, 720, title)
+        # fig.write_html(f'{filename}.html')
+        self.save(fig, filename)
 
     def plot_w_subplots(self, data, x, y, filename, title):
         total = len(data)

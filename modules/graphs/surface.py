@@ -8,7 +8,7 @@ class Surface(Graph):
     def __init__(self):
         pass
     
-    def plot(self, values, x, y, fname):
+    def plot(self, values, x, y, fname, title):
         # minval = np.min(values)
         # maxval = max(np.max(values), abs(np.min(values)))
         # zmin, zmax = -maxval, maxval
@@ -28,8 +28,13 @@ class Surface(Graph):
         #             zmin = zmin, zmax=zmax
         #             ))
         
-        self._update_fig(fig)
-        fig.write_html(f'{fname}.html', include_plotlyjs='cdn')
+        self._update_fig(fig, 720, 720, title)
+        # fig.write_html(f'{fname}.html', include_plotlyjs='cdn')
+        self.save(fig, fname, doHtml=True)
+        fig.update_layout(scene_camera = dict(
+                        eye=dict(x=0, y=0, z=np.max(values)+1)
+                    ))
+        self.save(fig, fname+'-above', doHtml=True)
 
     def main(self):
         pass 

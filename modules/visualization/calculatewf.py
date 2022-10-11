@@ -16,6 +16,8 @@ class Grid:
         self.X, self.Y = np.mgrid[-BNDR:BNDR:STEP, -BNDR:BNDR:STEP]
         self.X_3D, self.Y_3D, self.Z_3D = np.mgrid[-BNDR:BNDR:STEP, -BNDR:BNDR:STEP, -BNDR:BNDR:STEP]
 
+    def get_scf_object(self): return self.SCF 
+    
     def do_rhf(self, geom):
         self.SCF = scfsolver.RHF(geom, 'sto-3g')
         self.SCF.do_rhf()

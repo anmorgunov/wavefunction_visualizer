@@ -2,6 +2,7 @@ import numpy as np
 import constants 
 from tools import sphericals
 import modules.scfcalculation.scfsolver as scfsolver
+import tools.hydrogenwf as hydrogenwf
 
 A0 = constants.A0
 
@@ -14,7 +15,22 @@ class Grid:
         self.X_3D, self.Y_3D, self.Z_3D = np.mgrid[-BNDR:BNDR:STEP, -BNDR:BNDR:STEP, -BNDR:BNDR:STEP]
         self.SCF = scfsolver.RHF(geom, 'sto-3g')
         self.SCF.do_rhf()
+        mol = self.SCF.get_molecule_object()
+        C0 = self.SCF.get_mo_coeff()
         # print(self.SCF.GS.analyze())
+        labels = mol.ao_labels()
+        # print(mol.ao_labels())
+        # # print(self.C0)
+        
+        # orbToContrib = {}
+        # for orb in range(mol.nelec[0]):
+        #     coeffs = C0[:, orb]
+        #     maxCoeff = np.sum(np.power(coeffs, 2))
+        #     weights = [round((coeff**2)/maxCoeff*100, 2) for coeff in coeffs]
+        #     for i, weight in enumerate(weights):
+        #         if weight <= 1: continue
+        #         orbToContrib.setdefault(orb, dict())[labels[i]] = weight
+        # print(orbToContrib)
 
         self.GEOMETRY = self.SCF.get_geometry() 
         self.MO = self.SCF.get_mo_coeff()
@@ -39,7 +55,7 @@ class Grid:
         return np.sqrt((x**2) + (y**2) + (z**2))
 
     def find_theta(self, x, y):
-        return np.arctan2(y/x)
+        return np.arctan2(y, x)
         if x == 0:
             return np.sign(y)*np.pi/2
         theta = np.arctan(y/x)
@@ -146,8 +162,14 @@ class Grid:
         for val in WFvalue.flatten():
             if val < 0: cntr[0] += 1
             else: cntr[1] += 1
-        print(cntr)
+        # print(cntr)
         return WFvalue
+
+    def plot_hydrogen(self, n, l, m):
+        nlm = f"{n}{l}{m}"
+        HydrogenObj = hydrogenwf.HydrogenWF()
+        orbital = HydrogenObj.get_nlm_funcs()[nlm]
+        return np.vectorize(orbital)(self.X, self.Y, 0)
 
     def main():
         pass

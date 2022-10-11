@@ -8,9 +8,10 @@ class Heatmap(Graph):
     def __init__(self):
         pass
     
-    def plot(self, values, x, y):
+    def plot(self, values, x, y, filename):
         minval = np.min(values)
         maxval = max(np.max(values), abs(np.min(values)))
+        if maxval < 1e-6: maxval = 1e-2
         zmin, zmax = -maxval, maxval
         if minval >= 0:
             colorscale = [[0, 'black'], [1, 'cyan']]
@@ -26,7 +27,7 @@ class Heatmap(Graph):
                     ))
         
         self._update_fig(fig)
-        fig.write_html('test.html')
+        fig.write_html(f'{filename}.html')
 
     def main(self):
         pass 

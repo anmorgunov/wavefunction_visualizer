@@ -2,3 +2,9 @@
 
 __pycache__/
 *html
+*zip
+orca/*out
+orca/*inp
+orca/*densities
+orca/*molden*
+orca/*txt

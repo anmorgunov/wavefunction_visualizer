@@ -15,9 +15,11 @@ class Volume(Graph):
         # fig = go.Figure(data=[go.Surface(z=values,
         #                          x=x, y=y,
         #                          )],)
-        print(np.min(values), np.max(values))
-        print(len(values), len(values.flatten()))
+        # print(np.min(values), np.max(values))
+        # values = values * (-1)
+        # print(len(values), len(values.flatten()))
         # print(values)
+        # print(values[2][5][0.89], values[2][5][-0.89])
         fig = go.Figure(data=go.Volume(
             x=X.flatten(),
             y=Y.flatten(),
@@ -27,8 +29,8 @@ class Volume(Graph):
             isomax=param,
             opacity=0.2, # needs to be small to see through all surfaces
             surface_count=100, # needs to be a large number for good volume rendering
-            opacityscale="extremes",
-            colorscale='RdBu'
+            opacityscale="max",
+            colorscale='balance'
             ))
         
         # self._update_fig(fig)

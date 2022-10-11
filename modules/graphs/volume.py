@@ -8,7 +8,7 @@ class Volume(Graph):
     def __init__(self):
         pass
     
-    def plot(self, values, X, Y, Z, fname):
+    def plot(self, values, X, Y, Z, fname, title):
 
         # values = np.power(values, 2)
         param = 1*10**(-1)
@@ -34,7 +34,8 @@ class Volume(Graph):
             ))
         
         # self._update_fig(fig)
-        fig.write_html(f'{fname}.html',)# include_plotlyjs='cdn')
+        # fig.write_html(f'{fname}.html',)# include_plotlyjs='cdn')
+        self.save(fig, fname)
 
     def main(self):
         pass 

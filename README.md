@@ -32,9 +32,13 @@ You can plot MO in 3 different representations: as a heat map, as a surface, and
 
 ![Hydrogen Atom AOs](output/svg/hydrogen/all_aos.svg)
 
+## Requirements
+
+This project uses [plotly](http://plotly.com), numpy, and [pyscf](http://pyscf.org).
+
 ## To-Do List
 
-- [] Create a command based endpoint for `hfwavefunctions.py` so that you can specify molecule name, orbital to be visualized, and representation and get results.
-- [] Improve documentation (add README.md to modules)
-- [] Add docstrings
-- [] Add tests?
+- [ ] Create a command based endpoint for `hfwavefunctions.py` so that you can specify molecule name, orbital to be visualized, and representation and get results.
+- [ ] Improve documentation (add README.md to modules)
+- [ ] Add docstrings
+- [ ] Add tests?

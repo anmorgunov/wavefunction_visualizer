@@ -30,6 +30,8 @@ You can plot MO in 3 different representations: as a heat map, as a surface, and
 
 ![H 2p-3d interaction](output/svg/hydrogen/h210-320.svg)
 
+![Hydrogen Atom AOs](output/svg/hydrogen/all_aos.svg)
+
 ## To-Do List
 
 - [] Create a command based endpoint for `hfwavefunctions.py` so that you can specify molecule name, orbital to be visualized, and representation and get results.

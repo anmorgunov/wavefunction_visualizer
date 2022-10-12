@@ -12,7 +12,7 @@
 - [output](output/) -- for svg, jpg, and html graphs.
 - [modules](modules/) -- modules used by functions in [wrappers](wrappers/)
 
-`wrappers/hydrogenaos.py` allows you to plot single AO functions of H or overlap of any two AOs as a function of internuclear distance. 
+`wrappers/hydrogenaos.py` allows you to plot single AO functions of H or overlap of any two AOs as a function of internuclear distance.
 
 `wrappers/hfwavefunctions.py` allows you to plot MO based on RHF calculations.
 

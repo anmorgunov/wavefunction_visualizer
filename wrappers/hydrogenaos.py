@@ -24,11 +24,19 @@ PARAMETERS = [
 ]
 nlmToName = {'100': '1s', '200': '2s', '300': '3s', '210': '2p', '310': '3p', '320': '3d'}
 
-for param in PARAMETERS:
-    nlm1, nlm2, rScales, BNDR, STEP = param
-    grid = calculatewf.Grid(BNDR, STEP)
-    r_and_values = grid.plot_two_h_ao(nlm1, nlm2, rScales)
-    filename = f'hydrogen{os.sep}h{nlm1}-{nlm2}'
-    HM = heatmap.Heatmap()
-    HM.main()
-    HM.plot_w_subplots(r_and_values, grid.X, grid.Y, filename, f'c1*{nlmToName[nlm1]}+c2*{nlmToName[nlm2]}. c1 > 0. Left column: c2 < 0. Right column: c2 > 0')
+# for param in PARAMETERS:
+#     nlm1, nlm2, rScales, BNDR, STEP = param
+#     grid = calculatewf.Grid(BNDR, STEP)
+    # r_and_values = grid.plot_two_h_ao(nlm1, nlm2, rScales)
+    # values = [elt[1] for elt in r_and_values]
+#     filename = f'hydrogen{os.sep}h{nlm1}-{nlm2}'
+#     HM = heatmap.Heatmap()
+#     HM.main()
+#     HM.plot_mixing(r_and_values, grid.X, grid.Y, filename, f'c1*{nlmToName[nlm1]}+c2*{nlmToName[nlm2]}. c1 > 0. Left column: c2 < 0. Right column: c2 > 0')
+
+grid = calculatewf.Grid(20, 200j)
+values = grid.plot_all_ao()
+HM = heatmap.Heatmap()
+HM.main()
+filename = f"hydrogen{os.sep}all_aos"
+HM.plot_mixing(values, grid.X, grid.Y, filename, 'Hydrogen atom AOs')

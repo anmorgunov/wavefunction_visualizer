@@ -39,23 +39,23 @@ class Heatmap(Graph):
         # fig.write_html(f'{filename}.html')
         self.save(fig, filename)
 
-    def plot_w_subplots(self, data, x, y, filename, title):
+    def plot_mixing(self, data, x, y, filename, title):
         total = len(data)
         nCol = 2
         nRow = total // nCol + total % nCol
         fig = make_subplots(rows=nRow, cols=nCol,
                             horizontal_spacing=0.05,
                             vertical_spacing=0.05)
-        minval = min([np.min(values[1]) for values in data])
-        maxval = min([np.max(values[1]) for values in data])
+        minval = min([np.min(values) for values in data])
+        maxval = min([np.max(values) for values in data])
         # print([np.max(values[1]) for values in data])
 
         # print(fig.print_grid)
-        for i, (r, values) in enumerate(data):
+        for i, values in enumerate(data):
             irow = i // nCol + 1
             icol = i % nCol + 1
             # print(irow, icol)
-            fig.append_trace(self.create_heatmap_trace(values, x, y, minval, maxval/1.5), row = irow, col = icol)
+            fig.append_trace(self.create_heatmap_trace(values, x, y, minval, maxval), row = irow, col = icol)
 
         self._update_fig(fig, width=900, height=350*nRow, title=title)
 

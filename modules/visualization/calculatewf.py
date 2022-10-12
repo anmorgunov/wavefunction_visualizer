@@ -17,7 +17,7 @@ class Grid:
         self.X_3D, self.Y_3D, self.Z_3D = np.mgrid[-BNDR:BNDR:STEP, -BNDR:BNDR:STEP, -BNDR:BNDR:STEP]
 
     def get_scf_object(self): return self.SCF 
-    
+
     def do_rhf(self, geom):
         self.SCF = scfsolver.RHF(geom, 'sto-3g')
         self.SCF.do_rhf()
@@ -137,6 +137,11 @@ class Grid:
             densities[i] = np.sum(dens)
             avg_r[i] = np.sum(rIntegral) * (self.BNDR/(self.STEP.imag-1))
         return densities, avg_r
+
+    def plot_all_ao(self):
+        nlms = ['100', '200', '210', '300', '310', '320']
+        atomWFs = [self.plot_hydrogen(nlm) for nlm in nlms]
+        return atomWFs
     
     def plot_two_h_ao(self, nlm1, nlm2, rScales):
         atomWFs = [self.plot_hydrogen(nlm1), self.plot_hydrogen(nlm2, (0, 0, 0))]

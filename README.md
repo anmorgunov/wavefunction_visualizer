@@ -42,3 +42,4 @@ This project uses [plotly](http://plotly.com), numpy, and [pyscf](http://pyscf.o
 - [ ] Improve documentation (add README.md to modules)
 - [ ] Add docstrings
 - [ ] Add tests?
+- [ ] Figure out whether there's a bug in my code or the "max" colorscale for volume plots works worse with negative values.

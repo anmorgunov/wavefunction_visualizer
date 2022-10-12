@@ -78,6 +78,15 @@ class Grid:
                     # val = val * sphericals.s_orbital()
                     # if val < THRESHOLD: return 0
                     return val
+                # def help_eval(x, y, z):
+                #     nX, nY, nZ = x-x_0, y-y_0, z-z_0
+                #     # if nZ > 0 and nY < 0: return -gto_eval(nX, abs(nY), abs(nZ))
+                #     val = gto_eval(x-x_0, y-y_0, z-z_0)
+                #     if y > 0 and z > 0 and val > 0: 
+                #         # print('huyase')
+                #         return -val
+                #     return val
+                # return help_eval
                 return lambda x, y, z: gto_eval(x-x_0, y-y_0, z-z_0)
             return set_origin
         return sto_ng_nl
@@ -97,8 +106,8 @@ class Grid:
             atomPosition = self.GEOMETRY[int(counter)][1] #first element is symbol name
             coeffs = self.atomToOrbs[atom][nl[:2]]
             # print(coeffs)
-            orbital = self.sto_ng(nl)(coeffs)
-            atomwf = np.vectorize(orbital(atomPosition))(*dToParams[dimensionality])
+            orbital = self.sto_ng(nl)(coeffs)(atomPosition)
+            atomwf = np.vectorize(orbital)(*dToParams[dimensionality])
             atomWFs.append(atomwf)
 
         self.atomWFs = atomWFs

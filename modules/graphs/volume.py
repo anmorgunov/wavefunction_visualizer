@@ -29,13 +29,13 @@ class Volume(Graph):
             isomax=param,
             opacity=0.2, # needs to be small to see through all surfaces
             surface_count=100, # needs to be a large number for good volume rendering
-            opacityscale="max",
+            opacityscale="extremes",
             colorscale='balance'
             ))
         
         # self._update_fig(fig)
         # fig.write_html(f'{fname}.html',)# include_plotlyjs='cdn')
-        self.save(fig, fname)
+        self.save(fig, fname, doHtml=True)
 
     def main(self):
         pass 

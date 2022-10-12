@@ -11,7 +11,7 @@ CUR_DIRECTORY = os.sep.join(os.path.dirname(__file__).split(os.sep)[:-1])
 # print("Welcome to wavefunction plotter!")
 # geom = input(f"Please type the filename (without .xyz) that contains the geometry of your molecule: ")
 
-grid = calculatewf.Grid(5, 30j)
+grid = calculatewf.Grid(8, 40j)
 # geom = 'co'
 geom = 'c6h6'
 grid.do_rhf(os.path.join(CUR_DIRECTORY, 'geometries', f"{geom}.xyz"))
@@ -20,7 +20,8 @@ SCFobject = grid.get_scf_object()
 MolObject = SCFobject.get_molecule_object()
 # MOs = range(MolObject.nelec[0]+1)
 
-MOs = {6}
+MOs = {6, 11, 13, 19}
+# MOs = [19]
 for i in MOs:
     values = grid.fill_mo(i)
     filename = f"{geom}{os.sep}{geom}-mo-{i}"

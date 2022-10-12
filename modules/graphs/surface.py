@@ -9,17 +9,20 @@ class Surface(Graph):
         pass
     
     def plot(self, values, x, y, fname, title):
-        # minval = np.min(values)
-        # maxval = max(np.max(values), abs(np.min(values)))
-        # zmin, zmax = -maxval, maxval
-        # if minval >= 0:
-        #     colorscale = [[0, 'black'], [1, 'cyan']]
-        #     zmin = 0
+        values = np.power(values, 2)
+        minval = np.min(values)
+        maxval = max(np.max(values), abs(np.min(values)))
+        zmin, zmax = -maxval, maxval
+        if minval >= 0:
+            # colorscale = [[0, 'black'], [1, 'cyan']]
+            zmin = 0
+        if maxval <= 1e-9: maxval=0
         # else:
         #     colorscale = [[0, 'yellow'], [0.5, 'black'], [1, 'cyan']]
-        values = np.power(values, 2)
+        
         fig = go.Figure(data=[go.Surface(z=values,
                                  x=x, y=y,
+                                 cmin=zmin, cmax=zmax
                                  )],)
         # fig = go.Figure(data=go.Heatmap(
         #             z=values.flatten(),

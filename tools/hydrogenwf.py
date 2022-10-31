@@ -49,7 +49,8 @@ class HydrogenWF:
     def psi310(self, x, y, z):
         r = self.find_r(x, y, z)
         theta = self.find_theta(x, y)
-        rho = self.Z*r/self.A0
+        rho = self.Z*r/(self.A0)
+        # return 1/(9*np.sqrt(6)) * rho * (4-rho) * self.Z**(1.5) * np.exp(-rho/2) * np.sqrt(3) * x / r * 1/np.sqrt(4*np.pi)
         return 1/(81*np.sqrt(np.pi/2)) * (self.Z/self.A0)**1.5 * np.exp(-rho/3) * (6*rho - (rho**2)) * np.cos(theta)
 
     def psi320(self, x, y, z):

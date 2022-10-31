@@ -47,7 +47,7 @@ class Heatmap(Graph):
                             horizontal_spacing=0.05,
                             vertical_spacing=0.05)
         minval = min([np.min(values) for values in data])
-        maxval = min([np.max(values) for values in data])
+        maxval = max([np.max(values) for values in data])
         # print([np.max(values[1]) for values in data])
 
         # print(fig.print_grid)
